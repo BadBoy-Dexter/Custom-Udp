@@ -9,12 +9,12 @@ YELLOW='\033[00;33m';
 clear
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 echo '                                                              
-  ██╗   ██╗███╗   ███╗ ██████╗ ██████╗ ██╗███████╗██╗███████╗██████╗ 
-  ╚██╗ ██╔╝████╗ ████║██╔═══██╗██╔══██╗██║██╔════╝██║██╔════╝██╔══██╗
-   ╚████╔╝ ██╔████╔██║██║   ██║██║  ██║██║█████╗  ██║█████╗  ██║  ██║
-    ╚██╔╝  ██║╚██╔╝██║██║   ██║██║  ██║██║██╔══╝  ██║██╔══╝  ██║  ██║
-     ██║   ██║ ╚═╝ ██║╚██████╔╝██████╔╝██║██║     ██║███████╗██████╔╝
-     ╚═╝   ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚═╝     ╚═╝╚══════╝╚═════╝ 
+   ██████╗ ███████╗██╗  ██╗████████╗███████╗██████╗ 
+   ██╔══██╗██╔════╝╚██╗██╔╝╚══██╔══╝██╔════╝██╔══██╗
+   ██║  ██║█████╗   ╚███╔╝    ██║   █████╗  ██████╔╝
+   ██║  ██║██╔══╝   ██╔██╗    ██║   ██╔══╝  ██╔══██╗
+   ██████╔╝███████╗██╔╝ ██╗   ██║   ███████╗██║  ██║
+   ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝  
  '
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 echo ""
@@ -26,7 +26,6 @@ echo -e " \033[0;31m Wait 10 Seconds to Start Installing!!!!\033[0m"
 echo -e " \033[0;35m══════════════════════════════════════════════════════════════════\033[0m"
 sleep 10
 
-
 startinstall(){
 apt update
 apt install -y curl wget cron python-minimal libpython-stdlib
@@ -37,8 +36,6 @@ apt install -y dos2unix nano unzip jq virt-what net-tools default-mysql-client
 apt install -y mlocate dh-make libaudit-dev build-essential fail2ban
 mkdir /etc/update-motd.d
 apt-get install inxi screenfetch lolcat figlet -y
-
-
 
 /bin/cat <<"EOM" >/etc/update-motd.d/01-custom
 #!/bin/sh
@@ -783,9 +780,9 @@ installing_api(){
 clear
 echo 'Installing Api.'
 {
-VPN_Owner='YModified';
-API_LINK='team.ymodified.online/api/private';
-API_KEY='YModified';
+VPN_Owner='MTknetwork';
+API_LINK='konekzvpn.online/api/premium';
+API_KEY='Tknetwork';
 
 cat <<EOF >/root/authentication.sh
 #!/bin/bash
@@ -812,11 +809,11 @@ echo "* * * * * /bin/bash  /root/authentication.sh >/dev/null 2>&1" | crontab -
 
 sh active.sh | tee -a  /root/active.sh
 
-wget -O /root/active.sh "team.ymodified.online/api/private/active.php?key=YModified"
+wget -O /root/active.sh "konekzvpn.online/api/premium/active.php?key=Tknetwork"
 sleep 5
-wget -O /root/inactive.sh "team.ymodified.online/api/private/inactive.php?key=YModified"
+wget -O /root/inactive.sh "konekzvpn.online/premium/inactive.php?key=Tknetwork"
 sleep 5
-wget -O /root/deleted.sh "team.ymodified.online/api/private/deleted.php?key=YModified"
+wget -O /root/deleted.sh "konekzvpn.online/api/premium/deleted.php?key=Tknetwork"
  }&>/dev/null
 }
 
