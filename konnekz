@@ -469,7 +469,7 @@ net.ipv4.conf.eth0.rp_filter=0
 net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 
-sysctl -e -p
+sysctl -p
 
 iptables -F
 iptables -t nat -A PREROUTING -p udp --dport 20000:50000 -j DNAT --to-destination :5666
